@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>厨房里的魔法 - 物态变化科普</title>
+    <style>
+        html {
+            font-size: 2em; /* 全局字体放大2倍 */
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        }
+
+        /* 全局背景 - 渐变+纹理，增加层次感 */
+        body {
+            background: linear-gradient(120deg, #fef5e7 0%, #f8f9fa 100%);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ff9f43' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            color: #333;
+            line-height: 1.7;
+            min-height: 100vh;
+            font-size: 1em; /* 保持继承自 html 的2倍基准 */
+        }
+
+        .container {
+            /* 宽版布局：内容横向填满屏幕 */
+            max-width: none;
+            width: 100vw;
+            margin: 0 auto;
+            padding: 20px 40px;
+            position: relative;
+        }
+
+        /* 头部美化 - 增加渐变、阴影、装饰元素 */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 4px solid #ff9f43;
+            margin-bottom: 30px;
+            position: relative;
+            background: linear-gradient(135deg, #fff 0%, #fff9f0 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 159, 67, 0.15);
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 10px;
+            background: linear-gradient(90deg, transparent, #ff9f43, transparent);
+            border-radius: 5px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: #e67e22;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(230, 126, 34, 0.2);
+            letter-spacing: 2px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #d35400, #e67e22);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header .info {
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        /* 导航栏美化 - 胶囊样式、hover动效增强 */
+        .nav {
+            position: sticky; /* 滚动到顶部时固定 */
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 15px 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 159, 67, 0.2);
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #e67e22;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .nav a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: #d35400;
+            transition: width 0.3s;
+        }
+
+        .nav a:hover {
+            color: #d35400;
+            background: rgba(255, 159, 67, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav a:hover::after {
+            width: 80%;
+        }
+
+        /* 当前激活链接样式 */
+        .nav a.active {
+            color: #ffffff;
+            background: #e67e22;
+        }
+
+        .nav a.active::after {
+            width: 80%;
+            background: #ffffff;
+        }
+
+        /* 内容板块美化 - 圆角、阴影、内边距优化 */
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 159, 67, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff9f43, #e67e22, #d35400);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            color: #d35400;
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 5px solid #ff9f43;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            width: 60px;
+            height: 2px;
+            background: #ff9f43;
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            color: #e67e22;
+            margin: 25px 0 15px;
+            position: relative;
+            padding-left: 12px;
+        }
+
+        .section h3::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #ff9f43;
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        /* 文字样式优化 - 行高、间距、颜色层次 */
+        .section p {
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+            text-indent: 2em;
+            color: #444;
+            line-height: 1.8;
+            transition: color 0.3s;
+        }
+
+        .section p:hover {
+            color: #222;
+        }
+
+        .section ul, .section ol {
+            margin: 15px 0 25px 35px;
+            font-size: 1.05rem;
+        }
+
+        .section ul {
+            list-style: none;
+        }
+
+        .section ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .section ul li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #ff9f43;
+            font-size: 0.9rem;
+        }
+
+        .section ol li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        /* 物态变化卡片美化 */
+        .state-change {
+            background: linear-gradient(135deg, #fef5e7 0%, #ffe8cc 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 159, 67, 0.1);
+            border: 1px solid rgba(255, 159, 67, 0.2);
+        }
+
+        .state-change p {
+            text-indent: 0;
+            font-weight: bold;
+            color: #d35400;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .state-change .formula {
+            font-size: 1.3rem;
+            margin: 15px 0;
+            color: #333;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            display: inline-block;
+            margin: 8px 5px;
+        }
+
+        /* 思考板块美化 */
+        .think {
+            border: 2px dashed #ff9f43;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            background: rgba(255, 245, 231, 0.5);
+            transition: all 0.3s;
+        }
+
+        .think:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 159, 67, 0.15);
+            border-style: solid;
+        }
+
+        .think h4 {
+            color: #d35400;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .think h4::before {
+            content: "💡";
+            font-size: 1.5rem;
+        }
+
+        /* 高清内容容器美化 - 增加边框、阴影、hover动效 */
+        /* 媒体与文字并排布局 */
+        .media-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 25px;
+        }
+        .media-row > * {
+            flex: 1 1 400px; /* 最小宽度400px，超过时左右排列 */
+        }
+        .media-row .img-box,
+        .media-row .video-box {
+            margin: 0; /* 去掉默认上下外边距以便并排 */
+        }
+
+        /* 图片/视频容器美化 - 增加边框、阴影、hover动效 */
+        .img-box, .video-box {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .img-box::before, .video-box::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #ff9f43, transparent);
+            border-radius: 2px;
+        }
+
+        .img-box img, .video-box video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            transition: all 0.4s;
+            border: 5px solid #fff;
+        }
+
+        .img-box img:hover, .video-box video:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        .img-desc, .video-desc {
+            font-size: 1.05rem;
+            color: #666;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* 页脚美化 */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 3px solid #ff9f43;
+            margin-top: 40px;
+            color: #666;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+        }
+
+        .footer p {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #d35400, #e67e22);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 实验演示板块样式适配 */
+        #experiment-demo {
+            padding: 0;
+        }
+        #experiment-demo .experiment-container {
+            padding: 30px;
+            width: 100%;
+        }
+
+        /* 分页样式增强 */
+        .page-container {
+            display: none; /* 默认隐藏所有分页 */
+            /* 强制每页高度占满可见区，避免上下滚动 */
+            min-height: calc(100vh - 160px); /* 160px 约等于页眉+导航高度，可根据需要调整 */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow: hidden; /* 如确实超出则隐藏，提升体验 */
+        }
+        .page-container.active {
+            display: block; /* 激活的分页显示 */
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 右侧竖直分页栏 */
+        .pagination {
+            position: fixed;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%) scale(0.67); /* 缩小1.5倍 = 0.67 */
+            transform-origin: top right;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 3px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255, 159, 67, 0.2);
+            z-index: 2000;
+        }
+        .pagination-info {
+            writing-mode: vertical-rl; /* 竖排文本，从上到下呈现 */
+            text-orientation: upright;
+            /* 不再旋转，保持自然阅读顺序 */
+        }
+
+        .pagination-btn {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            border: none;
+            padding: 8px 3px;
+            border-radius: 8px;
+            font-size: 0.53rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(220, 100, 0, 0.2);
+            font-weight: 600;
+            letter-spacing: 1px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+
+        .pagination-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(220, 100, 0, 0.3);
+            background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
+        }
+
+        .pagination-info {
+            font-size: 0.53rem;
+            color: #d35400;
+            font-weight: bold;
+            background: rgba(255, 245, 231, 0.8);
+            padding: 5px 3px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* 实验演示所需的样式（嵌套在主页面中） */
+        .experiment-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: stretch;
+        }
+
+        /* 左侧实验界面 */
+        .experiment-area {
+            flex: 2;
+            min-width: 500px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 159, 67, 0.2);
+        }
+
+        .experiment-stage {
+            width: 100%;
+            height: 500px;
+            position: relative;
+        }
+
+        /* 铁架台 */
+        .stand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: 20px;
+            height: 450px;
+            background: linear-gradient(90deg, #888 0%, #aaa 50%, #888 100%);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .stand-base {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: 120px;
+            height: 20px;
+            background: #666;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .clamp-top {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 80px;
+            width: 180px;
+            height: 12px;
+            background: #777;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .clamp-bottom {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 280px;
+            width: 180px;
+            height: 12px;
+            background: #777;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .knob {
+            position: absolute;
+            left: calc(50% - 90px - 20px);
+            width: 24px;
+            height: 24px;
+            background: #333;
+            border-radius: 50%;
+            box-shadow: inset 0 0 4px #000;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .knob:hover {
+            transform: scale(1.1);
+        }
+
+        .knob-top {
+            top: 74px;
+        }
+
+        .knob-bottom {
+            top: 274px;
+        }
+
+        /* 金属片（固定在上方）- 调整层级，让水珠在下方（朝向烧杯侧）显示 */
+        .metal-sheet {
+            position: absolute;
+            left: 50%;
+            top: 60px;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 20px;
+            background: linear-gradient(135deg, #b0b0b0 0%, #808080 100%);
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 10; /* 金属片在上，水珠在其下方（朝向烧杯侧） */
+            transition: background 1s ease;
+        }
+
+        /* 水珠容器 - 核心修改：紧贴金属片下沿，高度仅10px，保证水珠只薄薄一层 */
+        #dropContainer {
+            position: absolute;
+            left: 50%;
+            top: 78px; /* 精准定位到金属片下沿（60+20-2=78） */
+            transform: translateX(-50%);
+            width: 200px;
+            height: 10px; /* 高度仅10px，限制水珠只能在金属片下沿薄薄一层 */
+            z-index: 9; /* 层级低于金属片，视觉上紧贴金属片 */
+            overflow: hidden; /* 防止水珠超出容器范围 */
+        }
+
+        /* 水珠样式 - 优化为薄而小的水珠，紧贴金属片 */
+        .water-drop {
+            position: absolute;
+            background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%);
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            /* 固定水珠在容器内，不向下偏移 */
+            transform: translateY(0);
+        }
+
+        /* 石棉网 */
+        .asbestos-mesh {
+            position: absolute;
+            left: 50%;
+            top: 260px;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 16px;
+            background: 
+                repeating-linear-gradient(90deg, #666 0px, #666 2px, transparent 2px, transparent 6px),
+                repeating-linear-gradient(0deg, #666 0px, #666 2px, transparent 2px, transparent 6px);
+            background-color: #aaa;
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 烧杯 */
+        .beaker {
+            position: absolute;
+            left: 50%;
+            top: 200px;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 200px;
+            border: 4px solid #d0d7e3;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            background: rgba(255,255,255,0.2);
+            overflow: hidden;
+            z-index: 4;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .beaker-spout {
+            position: absolute;
+            left: 50%;
+            top: 196px;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 15px;
+            border: 4px solid #d0d7e3;
+            border-bottom: none;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            background: rgba(255,255,255,0.2);
+            z-index: 3;
+        }
+
+        /* 沸水 */
+        .boiling-water {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(180deg, #c5e1ff 0%, #87ceeb 100%);
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        /* 水泡动画 */
+        .bubble {
+            position: absolute;
+            background: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            animation: riseBubble linear infinite;
+            opacity: 0;
+            z-index: 3;
+        }
+
+        @keyframes riseBubble {
+            0% { transform: translateY(0); opacity: 0.8; scale: 0.5; }
+            100% { transform: translateY(-140px); opacity: 0; scale: 1.2; }
+        }
+
+        /* 水蒸气 */
+        .steam {
+            position: absolute;
+            left: 50%;
+            top: 180px;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 120px;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 5;
+        }
+
+        .steam-particle {
+            position: absolute;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: riseSteam linear infinite;
+            filter: blur(2px);
+        }
+
+        @keyframes riseSteam {
+            0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+            100% { transform: translateY(-80px) translateX(15px); opacity: 0; }
+        }
+
+        /* 酒精灯 */
+        .alcohol-lamp {
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .lamp-cap {
+            position: absolute;
+            left: 50%;
+            top: -10px;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            background: #333;
+            border-radius: 4px 4px 0 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .wick {
+            position: absolute;
+            left: 50%;
+            top: -18px;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 18px;
+            background: #8b5a2b;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* 火焰 */
+        .flame {
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(180deg, #fff9c4 0%, #ffc107 50%, #ff5722 100%);
+            border-radius: 50% 50% 20% 20%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            clip-path: polygon(50% 0%, 100% 70%, 80% 100%, 20% 100%, 0% 70%);
+            animation: flameFlicker 1.2s infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes flameFlicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        /* 温度标签 */
+        .temp-tag {
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            font-size: 2em;
+            font-weight: bold;
+            color: #2d3748;
+            z-index: 20;
+            border: 1px solid rgba(255, 159, 67, 0.3);
+        }
+
+        /* 右侧控制面板 */
+        .control-panel {
+            flex: 1;
+            min-width: 320px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            border: 1px solid rgba(255, 159, 67, 0.2);
+        }
+
+        .title {
+            text-align: center;
+            color: #2d3748;
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #d35400, #e67e22);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-label {
+            font-size: 1.2em;
+            color: #2d3748;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-label::before {
+            content: "🔧";
+            font-size: 1.2rem;
+        }
+
+        button {
+            background: linear-gradient(135deg, #4299e1 0%, #38b2ac 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(66, 153, 225, 0.3);
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(66, 153, 225, 0.4);
+        }
+
+        /* 温度滑块 */
+        .temp-slider {
+            width: 100%;
+            height: 12px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(90deg, #e8f4f8, #4299e1, #38b2ac);
+            border-radius: 15px;
+            outline: none;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .temp-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 4px solid #4299e1;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(66, 153, 225, 0.5);
+            transition: transform 0.2s;
+        }
+
+        .temp-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .temp-value {
+            text-align: center;
+            font-size: 1.2em;
+            color: #2d3748;
+            font-weight: 600;
+            background: rgba(240, 248, 255, 0.8);
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #e8f4f8;
+        }
+
+        .desc-text {
+            color: #4a5568;
+            font-size: 1.1em;
+            line-height: 1.9;
+            text-align: left;
+            background: rgba(248, 250, 252, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #4299e1;
+        }
+
+        .state-tag {
+            background: linear-gradient(135deg, #4299e1 0%, #38b2ac 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            font-size: 1.2em;
+            font-weight: 500;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 1024px) {
+            .experiment-container {
+                flex-direction: column;
+            }
+            .experiment-area, .control-panel {
+                min-width: 100%;
+            }
+            .temp-tag {
+                right: 20px;
+                font-size: 1.2em;
+                padding: 12px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .section h2 {
+                font-size: 1.7rem;
+            }
+            .section h3 {
+                font-size: 1.3rem;
+            }
+            .container {
+                padding: 15px;
+            }
+            .section {
+                padding: 25px;
+            }
+            #experiment-demo .experiment-container {
+                padding: 15px;
+            }
+            .pagination {
+                gap: 15px;
+                padding: 20px 15px;
+            }
+            .pagination-btn {
+                padding: 10px 20px;
+                font-size: 0.3rem;
+            }
+            .pagination-info {
+                font-size: 0.3rem;
+                padding: 6px 15px;
+            }
+            .header {
+                padding: 30px 0;
+            }
+            .nav {
+                padding: 15px 20px;
+                border-radius: 20px;
+            }
+            .nav ul {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部标题 -->
+        <div class="header">
+            <h1>厨房里的魔法</h1>
+            <p class="info">组员: 赖宸铭、潘梓铭、黄隆 | 初一(1)班</p>
+        </div>
+
+        <!-- 导航栏 -->
+        <div class="nav">
+            <ul>
+                <!-- 添加 data-page 用于标记当前页 -->
+                <li><a href="#intro" data-page="1" onclick="jumpToPage(1)">场景导入</a></li>
+                <li><a href="#analysis" data-page="2" onclick="jumpToPage(2)">物态变化解析</a></li>
+                <li><a href="#experiment-demo" data-page="3" onclick="jumpToPage(3)">实验演示</a></li>
+                <li><a href="#expand" data-page="6" onclick="jumpToPage(6)">扩展思考</a></li>
+                <li><a href="#summary" data-page="7" onclick="jumpToPage(7)">总结</a></li>
+            </ul>
+        </div>
+
+        <!-- 第1页：场景导入 -->
+        <div class="page-container active" id="page1">
+            <div class="section" id="intro">
+                <h2>01 场景导入</h2>
+                <!-- 第1张图：厨房物态变化总场景以及说明并排 -->
+                <div class="media-row">
+                    <div class="img-box">
+                        <img src="img1-kitchen-scene.jpg" alt="厨房里的物态变化场景" width="600">
+                        <p class="img-desc">图1：厨房里随处可见的物态变化现象</p>
+                    </div>
+                    <p>想象一下,你走进厨房——这里简直是隐藏的“魔法实验室”!电饭煲打开时候的水气白花花的一片，沸腾的水咕噜咕噜向上冒热气，打开的冰淇淋慢慢变成液体，有没有想过,这些每天都在上演的奇妙现象,其实都是一场场精彩的物态变身秀? 今天,就让我们一起推开这扇科学之门,破解厨房里的物态变化密码吧!</p>
+                </div>
+                
+                <!-- 物态变化核心关系 -->
+                <div class="state-change">
+                    <p>物质三态相互转化关系</p>
+                    <div class="formula">固态 <span style="color:#e67e22">熔化(吸热)</span> ⇨ 液态 <span style="color:#e67e22">汽化(吸热)</span> ⇨ 气态</div>
+                    <div class="formula">气态 <span style="color:#27ae60">凝华(放热)</span> ⇨ 固态 <span style="color:#27ae60">凝固(放热)</span> ⇦ 液态 <span style="color:#27ae60">液化(放热)</span> ⇦ 气态</div>
+                </div>
+
+                <!-- 第2张图：物质三态变化示意图 -->
+                <div class="media-row">
+                    <div class="img-box">
+                        <img src="img2-state-change.png" alt="物质三态变化示意图" width="600">
+                        <p class="img-desc">图2：物质三态变化示意图</p>
+                    </div>
+                    <!-- 此处暂无配套说明，可空占位 -->
+                </div>
+
+                <h3>常见物态变化在厨房中的用处</h3>
+                <ul>
+                    <li><strong>汽化</strong>(液态→气态，吸热)：如水烧开产生水蒸气，温度越高汽化越快；蒸食物时火候控制汽化速度，过大易使食物变干，过小则延长蒸制时间。<em>注意</em>：炒菜前锅底水珠蒸发，加热时水迅速汽化，可能溅油伤人。</li>
+                    <li><strong>液化</strong>(气态→液态，放热)：如煮饺子时锅盖内侧的水珠，或冰箱取出的西红柿表面结露；温差越大液化越明显，可能影响食物口感。</li>
+                    <li><strong>凝固</strong>(液态→固态，放热)：如水在0℃结冰，用于制冰冷藏食物，抑制微生物生长。</li>
+                    <li><strong>熔化</strong>(固态→液态，吸热)：如冰块融化解冻食物，冷水解冻比热水更佳，避免表面变质。</li>
+                    <li><strong>凝华</strong>(气态→固态，放热)：如冰箱冷冻室结霜，或冻肉表面白霜，由水蒸气直接形成。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 第2页：物态变化解析 -->
+        <div class="page-container" id="page2">
+            <div class="section" id="analysis">
+                <h2>02 物态变化解析</h2>
+                
+                <h3>电饭煲打开的白花花水气</h3>
+                <!-- 视频1：电饭煲冒白气现象 MP4 及解析并排 -->
+                <div class="media-row">
+                    <div class="video-box">
+                        <video autoplay="autoplay" loop="loop" src="video3-rice-cooker-steam.mp4" controls width="700">
+                            你的浏览器不支持HTML5视频播放，请更换现代浏览器尝试
+                        </video>
+                        <p class="video-desc">视频1：电饭煲开盖时的液化现象</p>
+                    </div>
+                    <ol>
+                        <li><strong>剧烈的汽化(液态→气态)</strong>：电饭煲在煮饭或保温时，内部温度很高，锅底和米饭中的水分被持续加热，发生剧烈的汽化(沸腾和蒸发)，变成了无色、透明、肉眼看不见的水蒸气。</li>
+                        <li><strong>迅速的液化(气态→液态)</strong>：当你打开锅盖的瞬间，内部高温、高密度的水蒸气瞬间涌出，遇到了外界温度低得多的空气。这些水蒸气会迅速放热，温度降低。当温度降到“露点”(水蒸气凝结成水的温度)时，它们就会从气态重新变回微小的液态小水珠，悬浮在空气中。这就是看见的白花花水气的本质。</li>
+                    </ol>
+                </div>
+
+                <h3>打开的冰淇淋慢慢变成液体</h3>
+                <!-- 视频2：冰淇淋熔化过程 MP4 -->
+                <div class="media-row">
+                    <div class="video-box">
+                        <video autoplay="autoplay" loop="loop" src="video4-ice-cream-melt.mp4" controls width="700">
+                            你的浏览器不支持HTML5视频播放，请更换现代浏览器尝试
+                        </video>
+                        <p class="video-desc">视频2：冰淇淋的熔化现象</p>
+                    </div>
+                    <p>在室温下，冰淇淋会慢慢塌陷，融化成粘稠的奶液。冰淇淋是一个复杂的混合物，其中包含冰晶、脂肪和空气。当环境温度高于它的熔点时，其中的冰晶吸收热量率先熔化，同时乳脂肪也开始软化，导致整体的固体结构崩塌，变成液态。这个例子很好地说明了混合物没有固定的熔点，但核心过程依然是吸热熔化。</p>
+                </div>
+
+                <h3>沸腾的水咕噜咕噜向上冒热气</h3>
+                <!-- 视频3：水沸腾实验 MP4 以及说明 -->
+                <div class="media-row">
+                    <div class="video-box">
+                        <video autoplay="autoplay" loop="loop" src="video5-water-boiling.mp4" controls width="700">
+                            你的浏览器不支持HTML5视频播放，请更换现代浏览器尝试
+                        </video>
+                        <p class="video-desc">视频3：水沸腾时的汽化现象</p>
+                    </div>
+                    <div>
+                        <p>原理：物质从液态变为气态，这个过程叫做汽化(此处主要为沸腾形式，是一个剧烈的吸热过程)。</p>
+                        <p>解析：锅底持续加热，使底部的水最先获得能量变成水蒸气，形成气泡。当水温达到沸点(标准大气压下为100°C)时，水内部和表面同时发生剧烈的汽化，气泡大量上升、破裂，将水蒸气释放到空气中，这就是我们看到的“白气”(其实是水蒸气遇冷液化成的小水滴)。这个过程需要持续吸收大量热量来维持。</p>
+                        <p>应用：煮水沸腾，水吸热变为水蒸气，用于煮汤或蒸食物。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第3页：实验演示 -->
+        <div class="page-container" id="page3">
+            <div class="video-box">
+                        <video autoplay="autoplay" loop="loop" src="液化.mp4" controls width="700">
+                            你的浏览器不支持HTML5视频播放，请更换现代浏览器尝试
+                        </video>
+                        <p class="video-desc">视频：液化现象</p>
+                </div>
+        </div>
+        <div class="page-container" id="page4">
+             <div class="video-box">
+                        <video autoplay="autoplay" loop="loop" src="融化.mp4" controls width="700">
+                            你的浏览器不支持HTML5视频播放，请更换现代浏览器尝试
+                        </video>
+                        <p class="video-desc">视频：融化现象</p>
+                </div>
+        </div>
+        <div class="page-container" id="page5">
+            <div class="section" id="experiment-demo">
+                <h2>03 实验演示</h2>
+                <ul><iframe src="3.水沸腾气化实验演示.html" width="800" height="1200"></iframe>
+                    <!-- <li><a href="3.水沸腾气化实验演示.html">3.水沸腾气化实验演示.html</a></li> -->
+                </ul>
+            </div>
+        </div>
+        <!-- 第4页：扩展思考 -->
+        <div class="page-container" id="page6">
+            <div class="section" id="expand">
+                <h2>04 扩展思考</h2>
+                <!-- 原煎牛排主图 -->
+                <div class="media-row">
+                    <div class="img-box">
+                        <img src="img6-steak-fry.jpg" alt="煎牛排的美拉德反应" width="600">
+                        <p class="img-desc">图3：煎牛排的美拉德反应与汽化现象</p>
+                    </div>
+                    <!-- 旁边的空白说明或保留位置 -->
+                     <div class="think">
+                        <h4>思考一：为什么煎牛排比煮牛排更香？</h4>
+                        
+                    </div>
+                </div>
+                
+                
+
+                <!-- 新增：美拉德反应简介图片 -->
+                <div class="media-row">
+                    <div class="img-box">
+                        <img src="img7-maillard-reaction.jpg" alt="美拉德反应简介示意图" width="600">
+                        <p class="img-desc">图4：美拉德反应原理简介</p>
+                    </div>
+                    <!-- 旁边空白说明 -->
+                     <div>
+                     <p><strong>答案：“美拉德反应”与汽化的结合</strong></p>
+                    <p>煎炸时，高温让肉类表面的水分迅速汽化，为著名的“美拉德反应”(产生诱人香气和焦脆外壳)创造了完美的高温、无水环境。美拉德反应为：蛋白质 + 还原糖 接触并加热 → 改变色泽、结构，产生香气、提升菜品味道。</p>
+                    </div>
+                </div>
+                <div class="media-row">
+                    <div class="img-box">
+                        <img src="img8-steamed-egg.jpg" alt="嫩滑的蒸鸡蛋羹" width="600">
+                        <p class="img-desc">图5：嫩滑无蜂窝的蒸鸡蛋羹</p>
+                    </div>
+                    <!-- 旁边空白说明 -->
+                     <div class="think">
+                        <h4>思考二：鸡蛋羹成为“固态”是因为凝固现象吗</h4>
+                        <p><strong>答案：不是</strong></p>
+                        <p>原因是因为做鸡蛋羹是一个吸热过程，但是凝固是一个放热过程，很明显就不是凝固。那么问题来了，它又是为什么能成为“固态”的呢？</p>
+                     </div>
+                </div>
+                
+                
+                <div class="media-row">
+                    <div class="img-box">
+                        <img src="protein.webp" alt="蛋白质变性示意图" width="800">
+                    </div>
+                    <div class="think">
+                        <p><strong>鸡蛋加热变成固体的过程是蛋白质受热变性的过程。</strong></p>
+                        <p>这是属于化学变化，是蛋白质的变性。首先熟鸡蛋算固体，但是其中含有蛋白质、水等多种物质，是混合物。
+                            物态上常说的固态往往指某一种纯净物处于具有稳定形状的状态，其形状不会适应容器形状而改变，即不表现出流动性。
+                            而对于混合物，往往其中某一部分会作为溶剂存在，而其他的物质看做是“溶于”溶剂中。
+                            比如生鸡蛋是蛋白质为主的固态物质溶于水中，因此整体呈现液态，属于胶体。
+                            而熟鸡蛋是液态的水穿插在蛋白质形成的固态网络中，因此更严格说是固态溶液。</p>
+                    </div>
+                </div>
+                <!-- 新增：蒸鸡蛋羹图片 -->
+                
+            </div>
+        </div>
+
+        <!-- 第5页：总结 -->
+        <div class="page-container" id="page7">
+            <div class="section" id="summary">
+                <h2>05 总结</h2>
+                <p>回顾我们的探索，厨房里的每一个角落都在上演着物态变化的“魔术”：从固态到液态(熔化)的冰淇淋变身，从液态到气态(汽化)的烧开水、电饭煲冒出的“白气”…… 我们发现，这些看似平常的现象背后，都遵循着严谨的物理规律——吸热与放热。厨房，这个充满烟火气的地方，其实就是我们身边最生动、最美味的科学实验室。</p>
+                <p>下一次当你走进厨房，不妨用科学的眼光重新审视它。你会发现，科学从未远离生活，它正是生活本身最精妙的注解。</p>
+                <p style="text-align: center; font-weight: bold; color: #e67e22; margin-top: 20px; font-size: 1.2rem; letter-spacing: 1px;">愿我们都能永葆一颗好奇的心，在生活的每一个角落，发现科学，感受奇妙！</p>
+            </div>
+        </div>
+
+        <!-- 分页控制区域 -->
+        <!-- 右侧竖直分页栏 -->
+        <div class="pagination">
+            <button class="pagination-btn" id="prevBtn" disabled>上一页</button>
+            <span class="pagination-info" id="pageInfo">第1页 / 共7页</span>
+            <button class="pagination-btn" id="nextBtn">下一页</button>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>感谢观看 ❤</p>
+        </div>
+    </div>
+
+    <!-- 分页逻辑脚本 -->
+    <script>
+        // 分页核心变量
+        let currentPage = 1;
+        const totalPages = 7; // 总页数
+        const pageContainers = document.querySelectorAll('.page-container');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageInfo = document.getElementById('pageInfo');
+
+        // 初始化分页
+        function initPagination() {
+            updatePaginationUI();
+            highlightNav(currentPage); // 初始化时高亮第一页链接
+            
+            // 上一页按钮点击事件
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    changePage(currentPage - 1);
+                }
+            });
+
+            // 下一页按钮点击事件
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    changePage(currentPage + 1);
+                }
+            });
+
+            // 监听页面滚动以自动识别当前页 —— 选取屏幕内可见比例最高的分页
+            let observerEnabled = true; // 控制开关
+            const observer = new IntersectionObserver(entries => {
+                if (!observerEnabled) return;
+                // 只需在任一摘要进入时计算一次当前最显著页面
+                let best = {ratio: 0, num: currentPage};
+                pageContainers.forEach(pc => {
+                    const rect = pc.getBoundingClientRect();
+                    const visibleHeight = Math.min(window.innerHeight, rect.bottom) - Math.max(0, rect.top);
+                    const ratio = rect.height > 0 ? visibleHeight / rect.height : 0;
+                    const idnum = parseInt(pc.id.replace('page',''),10);
+                    if (ratio > best.ratio) {
+                        best = {ratio, num: idnum};
+                    }
+                });
+                if (best.num !== currentPage && best.ratio > 0.25) {
+                    changePage(best.num);
+                }
+            }, {
+                root: null,
+                threshold: [0.25,0.5,0.75,1]
+            });
+            pageContainers.forEach(pc => observer.observe(pc));
+
+            // 在 changePage 时暂时禁用 observer
+            const originalChange = changePage;
+            changePage = function(pageNum) {
+                observerEnabled = false;
+                originalChange(pageNum);
+                setTimeout(() => { observerEnabled = true; }, 500);
+            };
+        }
+
+        // 切换分页并滚动到对应容器
+        function changePage(pageNum) {
+            // 隐藏当前页
+            pageContainers.forEach(container => {
+                container.classList.remove('active');
+            });
+            // 显示目标页
+            const target = document.getElementById(`page${pageNum}`);
+            target.classList.add('active');
+            // 滚动到该分页顶部
+            target.scrollIntoView({behavior:'smooth'});
+            // 更新当前页
+            currentPage = pageNum;
+            // 更新分页UI
+            updatePaginationUI();
+            // 高亮对应导航链接
+            highlightNav(pageNum);
+        }
+
+        // 跳转到指定页（导航栏链接用）
+        function jumpToPage(pageNum) {
+            changePage(pageNum);
+            return false; // 阻止锚点默认行为
+        }
+
+        // 高亮导航中对应页的链接
+        function highlightNav(pageNum) {
+            const links = document.querySelectorAll('.nav a');
+            links.forEach(link => {
+                if (parseInt(link.dataset.page) === pageNum) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // 更新分页按钮和信息
+        function updatePaginationUI() {
+            // 更新页码信息
+            pageInfo.textContent = `第${currentPage}页 / 共${totalPages}页`;
+            
+            // 控制上一页按钮状态
+            if (currentPage <= 1) {
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+            }
+
+            // 控制下一页按钮状态
+            if (currentPage >= totalPages) {
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.disabled = false;
+            }
+        }
+
+        // 初始化分页
+        initPagination();
+    </script>
+
+    <!-- 实验演示的JavaScript代码 -->
+    <script>
+        // 获取DOM元素
+        const resetBtn = document.getElementById('resetBtn');
+        const autoBtn = document.getElementById('autoBtn');
+        const flame = document.getElementById('flame');
+        const boilingWater = document.getElementById('boilingWater');
+        const steam = document.getElementById('steam');
+        const metalSheet = document.getElementById('metalSheet');
+        const dropContainer = document.getElementById('dropContainer');
+        const tempTag = document.getElementById('tempTag');
+        const stateTag = document.getElementById('stateTag');
+        const tempSlider = document.getElementById('tempSlider');
+        const tempValue = document.getElementById('tempValue');
+        
+        // 核心变量
+        let currentTemp = 25;
+        let isAutoPlaying = false;
+        let autoTimer = null;
+        const dropTotal = 80; // 增加水珠数量，保证薄薄一层的覆盖效果
+        const triggerTemp = 80;
+        
+        // 初始化
+        if (resetBtn) { // 仅在有实验元素时初始化
+            initBubbles(currentTemp); 
+            initSteam();
+            initDrops();
+            updateExperiment(currentTemp);
+            
+            // 水温滑块事件
+            tempSlider.addEventListener('input', function() {
+                if (isAutoPlaying) stopAuto();
+                currentTemp = parseInt(this.value);
+                updateExperiment(currentTemp);
+            });
+            
+            // 重置按钮
+            resetBtn.addEventListener('click', () => {
+                stopAuto();
+                currentTemp = 25;
+                tempSlider.value = 25;
+                updateExperiment(currentTemp);
+            });
+            
+            // 自动演示按钮
+            autoBtn.addEventListener('click', () => {
+                if (isAutoPlaying) {
+                    stopAuto();
+                    autoBtn.textContent = '自动演示';
+                } else {
+                    startAuto();
+                    autoBtn.textContent = '停止演示';
+                }
+            });
+        }
+        
+        // 启动自动演示
+        function startAuto() {
+            isAutoPlaying = true;
+            let temp = 25;
+            autoTimer = setInterval(() => {
+                temp += 1;
+                if (temp > 100) temp = 25;
+                
+                currentTemp = temp;
+                tempSlider.value = temp;
+                updateExperiment(temp);
+                
+                if (temp >= triggerTemp && temp <= 100) {
+                    clearInterval(autoTimer);
+                    autoTimer = setInterval(() => {
+                        temp += 0.5;
+                        if (temp > 100) temp = 25;
+                        currentTemp = temp;
+                        tempSlider.value = temp;
+                        updateExperiment(temp);
+                    }, 100);
+                }
+            }, 80);
+        }
+        
+        // 停止自动演示
+        function stopAuto() {
+            isAutoPlaying = false;
+            clearInterval(autoTimer);
+            if (autoBtn) autoBtn.textContent = '自动演示';
+        }
+        
+        // 初始化水泡（根据温度动态生成数量）
+        function initBubbles(temp) {
+            if (!boilingWater) return;
+            boilingWater.innerHTML = ''; // 清空现有气泡
+            
+            // 温度越高，气泡数量越多：25℃时0个，100℃时最多60个
+            const bubbleCount = Math.floor(Math.max(0, (temp - 25) / 75 * 60));
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.width = `${3 + Math.random()*8}px`;
+                bubble.style.height = bubble.style.width;
+                bubble.style.left = `${Math.random()*90}%`;
+                bubble.style.bottom = `${Math.random()*60}px`;
+                bubble.style.animationDuration = `${2 + Math.random()*3}s`;
+                bubble.style.animationDelay = `${Math.random()*2}s`;
+                boilingWater.appendChild(bubble);
+                
+                // 启动气泡动画
+                setTimeout(() => {
+                    bubble.style.opacity = 0.8;
+                }, Math.random() * 1000);
+            }
+        }
+        
+        // 初始化水蒸气粒子
+        function initSteam() {
+            if (!steam) return;
+            steam.innerHTML = '';
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'steam-particle';
+                particle.style.width = `${5 + Math.random()*10}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random()*100}%`;
+                particle.style.top = `${Math.random()*100}%`;
+                particle.style.animationDuration = `${1 + Math.random()*2}s`;
+                particle.style.animationDelay = `${Math.random()*2}s`;
+                steam.appendChild(particle);
+            }
+        }
+        
+        // 初始化水珠
+        function initDrops() {
+            if (!dropContainer) return;
+            dropContainer.innerHTML = '';
+            
+            for (let i = 0; i < dropTotal; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'water-drop';
+                drop.style.width = `${1 + Math.random()*3}px`;
+                drop.style.height = drop.style.width;
+                drop.style.left = `${Math.random()*100}%`;
+                drop.style.top = `${Math.random()*100}%`;
+                dropContainer.appendChild(drop);
+            }
+        }
+        
+        // 更新实验状态
+        function updateExperiment(temp) {
+            // 更新温度显示
+            if (tempTag) tempTag.textContent = `${temp}℃`;
+            if (tempValue) tempValue.textContent = `当前温度：${temp}℃`;
+            
+            // 更新火焰状态
+            if (flame) {
+                flame.style.opacity = temp > 50 ? 1 : 0;
+            }
+            
+            // 更新水蒸气状态
+            if (steam) {
+                steam.style.opacity = temp > 80 ? 1 : 0;
+            }
+            
+            // 更新金属片状态
+            if (metalSheet) {
+                metalSheet.style.background = temp > 80 
+                    ? 'linear-gradient(135deg, #ffcccc 0%, #ff9999 100%)' 
+                    : 'linear-gradient(135deg, #b0b0b0 0%, #808080 100%)';
+            }
+            
+            // 更新水珠状态
+            const drops = document.querySelectorAll('.water-drop');
+            drops.forEach((drop, index) => {
+                if (temp > triggerTemp) {
+                    drop.style.opacity = Math.random();
+                    drop.style.transform = `translateY(${Math.random()*5}px)`;
+                } else {
+                    drop.style.opacity = 0;
+                    drop.style.transform = 'translateY(0)';
+                }
+            });
+            
+            // 更新状态标签
+            if (stateTag) {
+                if (temp < 50) {
+                    stateTag.textContent = '状态：水未加热，无明显变化';
+                    stateTag.style.background = 'linear-gradient(135deg, #4299e1 0%, #38b2ac 100%)';
+                } else if (temp < 100) {
+                    stateTag.textContent = '状态：水受热，产生少量水蒸气';
+                    stateTag.style.background = 'linear-gradient(135deg, #ed8936 0%, #e67e22 100%)';
+                } else {
+                    stateTag.textContent = '状态：水沸腾，大量水蒸气液化成水珠';
+                    stateTag.style.background = 'linear-gradient(135deg, #e53e3e 0%, #c53030 100%)';
+                }
+            }
+            
+            // 重新生成气泡
+            initBubbles(temp);
+        }
+    </script>
+</body>
+</html>
