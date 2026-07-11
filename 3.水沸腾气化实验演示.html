@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水沸腾汽化实验演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d9e2ec 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+
+        /* 容器布局 - 改为左右结构（仅修改这里） */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row; /* 改为横向排列 */
+            gap: 30px;
+            height: calc(100vh - 40px);
+        }
+
+        /* 左侧实验界面（仅修改布局相关属性） */
+        .experiment-area {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            flex: 3; /* 占3份宽度 */
+            min-width: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .experiment-stage {
+            width: 100%;
+            height: 450px; /* 保持原始高度 */
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 实验装置样式 - 完全保留原始样式 */
+        /* 铁架台 */
+        .stand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: 20px;
+            height: 400px;
+            background: linear-gradient(90deg, #888 0%, #aaa 50%, #888 100%);
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .stand-base {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: 120px;
+            height: 20px;
+            background: #666;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .clamp {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 200px;
+            width: 180px;
+            height: 12px;
+            background: #777;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .knob {
+            position: absolute;
+            left: calc(50% - 90px - 20px);
+            top: 194px;
+            width: 24px;
+            height: 24px;
+            background: #333;
+            border-radius: 50%;
+            box-shadow: inset 0 0 4px #000;
+            z-index: 2;
+        }
+
+        /* 石棉网 */
+        .asbestos-mesh {
+            position: absolute;
+            left: 50%;
+            top: 220px;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 16px;
+            background: 
+                repeating-linear-gradient(90deg, #666 0px, #666 2px, transparent 2px, transparent 6px),
+                repeating-linear-gradient(0deg, #666 0px, #666 2px, transparent 2px, transparent 6px);
+            background-color: #aaa;
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        /* 烧杯 - 完全保留原始位置和样式 */
+        .beaker {
+            position: absolute;
+            left: 50%;
+            top: 100px;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 280px;
+            border: 4px solid #d0d7e3;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            background: rgba(255,255,255,0.2);
+            overflow: hidden;
+            z-index: 4;
+        }
+
+        .beaker-spout {
+            position: absolute;
+            left: 50%;
+            top: 96px;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 15px;
+            border: 4px solid #d0d7e3;
+            border-bottom: none;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            background: rgba(255,255,255,0.2);
+            z-index: 3;
+        }
+
+        /* 水和气泡容器 */
+        .water-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80%;
+            background: linear-gradient(180deg, #c5e1ff 0%, #87ceeb 100%);
+            border-radius: 0 0 11px 11px;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        /* 气泡样式 */
+        .bubble {
+            position: absolute;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            opacity: 0;
+            animation: riseBubble linear infinite;
+            z-index: 3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        @keyframes riseBubble {
+            0% { 
+                transform: translateY(0); 
+                opacity: 0.8; 
+                scale: 0.5; 
+            }
+            100% { 
+                transform: translateY(-220px); 
+                opacity: 0; 
+                scale: 1.2; 
+            }
+        }
+
+        /* 水蒸气 - 完全保留原始样式 */
+        .steam {
+            position: absolute;
+            left: 50%;
+            top: 60px;
+            transform: translateX(-50%);
+            width: 220px;
+            height: 150px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            z-index: 5;
+        }
+
+        .steam-particle {
+            position: absolute;
+            background: rgba(255,255,255,0.75);
+            border-radius: 50%;
+            animation: riseSteam linear infinite;
+            filter: blur(3px);
+        }
+
+        @keyframes riseSteam {
+            0% { 
+                transform: translateY(0) translateX(0); 
+                opacity: 0.85;
+            }
+            100% { 
+                transform: translateY(-120px) translateX(calc(Math.random()*60px - 30px));
+                opacity: 0.1;
+            }
+        }
+
+        /* 酒精灯 */
+        .alcohol-lamp {
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            z-index: 1;
+        }
+
+        .lamp-cap {
+            position: absolute;
+            left: 50%;
+            top: -10px;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            background: #333;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .wick {
+            position: absolute;
+            left: 50%;
+            top: -18px;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 18px;
+            background: #8b5a2b;
+        }
+
+        /* 火焰 */
+        .flame {
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 70px;
+            background: linear-gradient(180deg, #fff9c4 0%, #ffc107 50%, #ff5722 100%);
+            border-radius: 50% 50% 20% 20%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            clip-path: polygon(50% 0%, 100% 70%, 80% 100%, 20% 100%, 0% 70%);
+            animation: flameFlicker 1.2s infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes flameFlicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        /* 温度标签 */
+        .temp-tag {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            font-size: 28px;
+            font-weight: bold;
+            color: #2d3748;
+            z-index: 20;
+        }
+
+        /* 状态标签 */
+        .state-tag {
+            position: absolute;
+            left: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #4299e1;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            font-size: 22px;
+            font-weight: 500;
+            text-align: center;
+            z-index: 20;
+        }
+
+        /* 实验标题 */
+        .experiment-title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d3748;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* 右侧控制面板（仅修改布局相关属性） */
+        .control-panel {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            flex: 1; /* 占1份宽度 */
+            min-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            justify-content: center;
+            align-items: stretch;
+            overflow-y: auto;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-width: 280px; /* 保留原始最小宽度 */
+        }
+
+        .control-label {
+            font-size: 20px;
+            color: #2d3748;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        button {
+            background: linear-gradient(135deg, #4299e1 0%, #38b2ac 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(66, 153, 225, 0.4);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        /* 温度滑块 */
+        .temp-slider {
+            width: 100%;
+            height: 12px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(90deg, #e8f4f8, #4299e1, #38b2ac);
+            border-radius: 15px;
+            outline: none;
+        }
+
+        .temp-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 3px solid #4299e1;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(66, 153, 225, 0.5);
+        }
+
+        .temp-value {
+            text-align: center;
+            font-size: 20px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .desc-text {
+            color: #4a5568;
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: left;
+            max-width: 800px; /* 保留原始最大宽度 */
+        }
+
+        /* 响应式适配 - 保留原始逻辑，仅适配左右布局 */
+        @media (max-width: 1024px) {
+            /* 屏幕较小时改回上下布局 */
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .experiment-area {
+                min-width: auto;
+                min-height: 500px;
+                flex: none;
+            }
+            
+            .control-panel {
+                min-width: auto;
+                flex: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .experiment-area {
+                padding: 20px;
+                min-height: 400px;
+            }
+
+            .beaker {
+                width: 160px;
+                height: 220px;
+            }
+
+            .temp-tag {
+                right: 20px;
+                font-size: 22px;
+                padding: 10px 20px;
+            }
+
+            .state-tag {
+                left: 20px;
+                font-size: 18px;
+                padding: 10px 20px;
+            }
+
+            .experiment-title {
+                font-size: 24px;
+            }
+
+            .flame {
+                width: 40px;
+                height: 60px;
+            }
+
+            .control-panel {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .control-group {
+                min-width: 100%;
+            }
+
+            .desc-text {
+                font-size: 16px;
+            }
+            
+            .steam {
+                width: 180px;
+                height: 120px;
+                top: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .experiment-area {
+                min-height: 350px;
+            }
+
+            .beaker {
+                width: 120px;
+                height: 180px;
+            }
+
+            .temp-tag {
+                right: 10px;
+                font-size: 18px;
+                padding: 8px 16px;
+            }
+
+            .state-tag {
+                left: 10px;
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+
+            .experiment-title {
+                font-size: 20px;
+            }
+
+            .flame {
+                width: 30px;
+                height: 50px;
+            }
+
+            button {
+                padding: 12px 24px;
+                font-size: 16px;
+            }
+            
+            .steam {
+                width: 140px;
+                height: 100px;
+                top: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧实验界面 -->
+        <div class="experiment-area">
+            <h2 class="experiment-title">水沸腾汽化实验演示</h2>
+            <div class="experiment-stage">
+                <!-- 铁架台 -->
+                <div class="stand"></div>
+                <div class="stand-base"></div>
+                <div class="clamp"></div>
+                <div class="knob"></div>
+
+                <!-- 石棉网 -->
+                <div class="asbestos-mesh"></div>
+
+                <!-- 烧杯 -->
+                <div class="beaker">
+                    <div class="water-container" id="waterContainer"></div>
+                </div>
+                <div class="beaker-spout"></div>
+
+                <!-- 水蒸气 -->
+                <div class="steam" id="steam"></div>
+
+                <!-- 酒精灯 -->
+                <div class="alcohol-lamp">
+                    <div class="lamp-cap"></div>
+                    <div class="wick"></div>
+                </div>
+                <div class="flame" id="flame"></div>
+
+                <!-- 温度和状态标签 -->
+                <div class="temp-tag" id="tempTag">25°C</div>
+                <div class="state-tag" id="stateTag">常温状态</div>
+            </div>
+        </div>
+
+        <!-- 右侧控制面板 -->
+        <div class="control-panel">
+            <div class="control-group">
+                <label class="control-label">实验控制</label>
+                <button id="resetBtn">重置实验</button>
+                <button id="autoBtn">自动演示</button>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">调节水温 (℃)</label>
+                <input type="range" min="25" max="100" value="25" class="temp-slider" id="tempSlider">
+                <div class="temp-value" id="tempValue">25°C</div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">汽化原理说明</label>
+                <p class="desc-text">
+                    1. 汽化：物质从液态变为气态的过程，分为蒸发和沸腾两种形式<br>
+                    2. 水温升高时，水分子运动加剧，气泡数量逐渐增多（60℃开始明显）<br>
+                    3. 100℃时水达到沸点，剧烈沸腾，大量气泡上升破裂，产生水蒸气<br>
+                    4. 沸腾过程中温度保持100℃不变，需要持续吸热<br>
+                    5. 水蒸气遇冷会液化成小水滴，形成我们看到的"白气"
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 完全保留原始JS代码，无任何修改
+        const resetBtn = document.getElementById('resetBtn');
+        const autoBtn = document.getElementById('autoBtn');
+        const flame = document.getElementById('flame');
+        const waterContainer = document.getElementById('waterContainer');
+        const steam = document.getElementById('steam');
+        const tempTag = document.getElementById('tempTag');
+        const stateTag = document.getElementById('stateTag');
+        const tempSlider = document.getElementById('tempSlider');
+        const tempValue = document.getElementById('tempValue');
+        
+        let currentTemp = 25;
+        let isAutoPlaying = false;
+        let autoTimer = null;
+        const maxBubbles = 80;
+        const boilingPoint = 100;
+        
+        initSteam();
+        updateExperiment(currentTemp);
+        
+        tempSlider.addEventListener('input', function() {
+            if (isAutoPlaying) stopAuto();
+            currentTemp = parseInt(this.value);
+            updateExperiment(currentTemp);
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            stopAuto();
+            currentTemp = 25;
+            tempSlider.value = 25;
+            updateExperiment(currentTemp);
+        });
+        
+        autoBtn.addEventListener('click', () => {
+            if (isAutoPlaying) {
+                stopAuto();
+                autoBtn.textContent = '自动演示';
+            } else {
+                startAuto();
+                autoBtn.textContent = '停止演示';
+            }
+        });
+        
+        function startAuto() {
+            isAutoPlaying = true;
+            let temp = 25;
+            
+            autoTimer = setInterval(() => {
+                temp += 1;
+                if (temp > boilingPoint) temp = 25;
+                
+                currentTemp = temp;
+                tempSlider.value = temp;
+                updateExperiment(temp);
+                
+                if (temp >= boilingPoint - 5) {
+                    clearInterval(autoTimer);
+                    autoTimer = setInterval(() => {
+                        temp = boilingPoint;
+                        currentTemp = temp;
+                        tempSlider.value = temp;
+                        updateExperiment(temp);
+                        
+                        setTimeout(() => {
+                            temp = 25;
+                            currentTemp = temp;
+                            tempSlider.value = temp;
+                            updateExperiment(temp);
+                        }, 3000);
+                    }, 1000);
+                }
+            }, 100);
+        }
+        
+        function stopAuto() {
+            isAutoPlaying = false;
+            clearInterval(autoTimer);
+            autoBtn.textContent = '自动演示';
+        }
+        
+        function initSteam() {
+            for (let i = 0; i < 80; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'steam-particle';
+                particle.style.width = `${5 + Math.random()*12}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random()*95}%`;
+                particle.style.top = `${Math.random()*80}%`;
+                particle.style.animationDelay = `${Math.random()*4}s`;
+                particle.style.animationDuration = `${2 + Math.random()*3}s`;
+                steam.appendChild(particle);
+            }
+        }
+        
+        function generateBubbles(temp) {
+            waterContainer.querySelectorAll('.bubble').forEach(bubble => bubble.remove());
+            
+            let bubbleCount = 0;
+            if (temp > 25) {
+                bubbleCount = Math.floor((temp - 25) / (boilingPoint - 25) * maxBubbles);
+            }
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                
+                const size = 5 + Math.random() * 15;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                bubble.style.left = `${Math.random()*90}%`;
+                bubble.style.bottom = `${Math.random()*10}%`;
+                
+                bubble.style.animationDelay = `${Math.random()*4}s`;
+                bubble.style.animationDuration = `${2 + Math.random()*3}s`;
+                
+                const opacity = 0.6 + (temp/boilingPoint) * 0.4;
+                bubble.style.opacity = opacity;
+                
+                waterContainer.appendChild(bubble);
+            }
+        }
+        
+        function updateExperiment(temp) {
+            const showTemp = Math.round(temp);
+            tempTag.textContent = `${showTemp}°C`;
+            tempValue.textContent = `${showTemp}°C`;
+            
+            flame.style.opacity = temp > 25 ? 1 : 0;
+            
+            generateBubbles(temp);
+            
+            if (temp >= 80) {
+                const steamOpacity = 0.5 + (temp - 80) / 20 * 0.7;
+                steam.style.opacity = Math.min(steamOpacity, 1.2);
+            } else {
+                steam.style.opacity = 0;
+            }
+            
+            updateStateLabel(temp);
+        }
+        
+        function updateStateLabel(temp) {
+            if (temp < 60) {
+                stateTag.textContent = '常温状态（无明显汽化）';
+                stateTag.style.background = '#4299e1';
+            } else if (temp < 80) {
+                stateTag.textContent = '水温升高（少量气泡）';
+                stateTag.style.background = '#ed8936';
+            } else if (temp < boilingPoint) {
+                stateTag.textContent = '即将沸腾（气泡增多）';
+                stateTag.style.background = '#9f7aea';
+            } else {
+                stateTag.textContent = '剧烈沸腾（大量汽化）';
+                stateTag.style.background = '#38b2ac';
+            }
+        }
+        
+        window.addEventListener('beforeunload', () => {
+            stopAuto();
+        });
+    </script>
+</body>
+</html>
